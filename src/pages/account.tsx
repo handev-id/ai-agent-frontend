@@ -29,7 +29,7 @@ const Account = ({ setUser }: Props) => {
       {accountApi.index.data ? (
         <div className="cn-box-base">
           <div className="pt-2 w-[400px] flex flex-col items-center">
-            <Avatar sizing="base" value={accountApi.index.data.avatar} />
+            <Avatar sizing="base" value={accountApi.index.data?.avatar} />
             <h2 className="h2 mt-4">{accountApi.index.data.name}</h2>
             <p className="desc">{accountApi.index.data.email}</p>
             <button

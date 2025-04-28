@@ -6,12 +6,14 @@ import Account from "./pages/account";
 import { UserModel } from "./apis/models/user";
 import Credentials from "./pages/credentials";
 import Testing from "./pages/testing";
+import Docs from "./pages/docs";
 
 const TABS = [
   { key: "account", label: "Account" },
   { key: "ai_agents", label: "AI Agent" },
   { key: "credentials", label: "Credentials" },
   { key: "testing", label: "Testing" },
+  { key: "docs", label: "Docs" },
 ];
 
 const App = () => {
@@ -28,6 +30,8 @@ const App = () => {
         return <Credentials />;
       case "testing":
         return <Testing />;
+      case "docs":
+        return <Docs />;
       default:
         return null;
     }

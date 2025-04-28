@@ -43,6 +43,7 @@ import {
   IoCheckmarkCircleOutline,
   IoCheckmarkDone,
   IoCloseCircleOutline,
+  IoCodeSlashOutline,
   IoPricetags,
   IoSearchOutline,
   IoSettingsOutline,
@@ -57,6 +58,7 @@ import {
 import { VscSettings } from "react-icons/vsc";
 import {
   IoIosArrowBack,
+  IoIosGitNetwork,
   IoMdArrowBack,
   IoMdCheckmark,
   IoMdCheckmarkCircleOutline,
@@ -67,7 +69,13 @@ import {
 import { LuImagePlus, LuPanelLeftOpen, LuPanelRightOpen } from "react-icons/lu";
 import { GoPencil, GoPlus, GoReply } from "react-icons/go";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import { FiDownload } from "react-icons/fi";
+import {
+  FiCode,
+  FiDownload,
+  FiHelpCircle,
+  FiLayers,
+  FiLink,
+} from "react-icons/fi";
 
 export const GLOBAL_ICONS = {
   email: <MdOutlineEmail />,
@@ -129,6 +137,12 @@ export const GLOBAL_ICONS = {
   businessOutline: <MdOutlineBusinessCenter />,
   businessFill: <MdAddBusiness />,
   telegram: <FaTelegramPlane />,
+  network: <IoIosGitNetwork />,
+  code: <IoCodeSlashOutline />,
+  api: <FiCode />,
+  integration: <FiLink />,
+  examples: <FiLayers />,
+  faq: <FiHelpCircle />,
 };
 
 export const NavigationMenu = [

@@ -9,6 +9,7 @@ import { GLOBAL_ICONS } from "../utils/icons";
 import { Controller, useForm } from "react-hook-form";
 import { CredentialsModel } from "../apis/models/credentials";
 import { Modal, useModal } from "../components/modal";
+import toast from "react-hot-toast";
 
 const Credentials = () => {
   const aiAgentApi = AiAgentEndpoint();
@@ -25,7 +26,18 @@ const Credentials = () => {
   } = useForm<CredentialsModel>();
 
   const onSubmit = async (data: CredentialsModel) => {
-    const newCredentials = await aiAgentApi.upsertCredentials.mutateAsync(data);
+    const newCredentials = await aiAgentApi.upsertCredentials.mutateAsync(
+      data,
+      {
+        onError: (err) => {
+          toast.error(
+            (err.response?.data as { message: string })?.message +
+              " " +
+              err.status
+          );
+        },
+      }
+    );
     reset(newCredentials);
     credentialsModal.control.open();
     await aiAgentApi.index.refetch();
@@ -135,7 +147,7 @@ const Credentials = () => {
                       />
                     )}
                   />
-                  <Controller
+                  {/* <Controller
                     control={control}
                     name="callbackUrl"
                     render={({ field: { value, onChange } }) => (
@@ -148,7 +160,7 @@ const Credentials = () => {
                         message={errors.callbackUrl?.message}
                       />
                     )}
-                  />
+                  /> */}
                   {!watch("id") ? (
                     <div className="flex justify-end mt-4">
                       <Button
@@ -198,7 +210,7 @@ const Credentials = () => {
             ) : (
               <div className="col-span-4 cn-box-base">
                 <h2 className="h2 text-center">
-                  Choose an AI agent to generate credentials
+                  Select an AI agent to generate credentials
                 </h2>
               </div>
             )}
