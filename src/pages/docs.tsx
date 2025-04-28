@@ -5,7 +5,7 @@ import { Disclosure } from "@headlessui/react";
 import { faqs } from "../utils/faqs";
 import Tab, { TabGroup } from "../components/Tab";
 import CodeDisplay from "../components/CodeDisplay";
-import { responseJSON } from "../utils/code-display";
+import { requestApi, responseJSON } from "../utils/code-display";
 
 type MenuKey = "api" | "integration" | "faq";
 
@@ -33,58 +33,52 @@ const Docs = () => {
   // Konten untuk masing-masing menu
   const menuContents = {
     api: (
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         <div>
-          <h3 className="h2">API Reference</h3>
-          <p className="text-base">
+          <h3 className="text-xl md:text-2xl font-bold">API Reference</h3>
+          <p className="text-sm md:text-base">
             Our API provides endpoints for integrating with our platform. Below
             are the available methods:
           </p>
 
-          <CodeDisplay
-            language="javascript"
-            code={`
-// Example API Request
-fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=YOUR_CLIENT_ID', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    content: 'Hello, how can I help you today?'
-    })
-    })
-    .then(response => response.json())
-    .then(data => console.log(data));
-    `.trim()}
-          />
+          <div className="mt-3">
+            <CodeDisplay language="javascript" code={requestApi().trim()} />
+          </div>
         </div>
         <div>
-          <h3 className="h2">Response Example</h3>
-          <p className="text-base">Success:</p>
-          <CodeDisplay
-            language="javascript"
-            code={responseJSON().success.trim()}
-          />
+          <h3 className="text-xl md:text-2xl font-bold mt-4 md:mt-6">
+            Response Example
+          </h3>
+          <p className="text-sm md:text-base">Success:</p>
+          <div className="mt-2">
+            <CodeDisplay
+              language="javascript"
+              code={responseJSON().success.trim()}
+            />
+          </div>
         </div>
         <div>
-          <p className="text-base">Error:</p>
-          <CodeDisplay
-            language="javascript"
-            code={responseJSON().error.trim()}
-          />
+          <p className="text-sm md:text-base">Error:</p>
+          <div className="mt-2">
+            <CodeDisplay
+              language="javascript"
+              code={responseJSON().error.trim()}
+            />
+          </div>
         </div>
       </div>
     ),
     integration: (
-      <div className="space-y-6">
-        <h3 className="h2">Integration Guide</h3>
-        <p>Follow these steps to integrate our widget into your application:</p>
+      <div className="space-y-4 md:space-y-6">
+        <h3 className="text-xl md:text-2xl font-bold">Integration Guide</h3>
+        <p className="text-sm md:text-base">
+          Follow these steps to integrate our widget into your application:
+        </p>
 
-        <CodeDisplay
-          language="html"
-          code={`
+        <div className="mt-3">
+          <CodeDisplay
+            language="html"
+            code={`
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,13 +94,16 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
 </body>
 </html>
           `.trim()}
-        />
+          />
+        </div>
       </div>
     ),
     faq: (
-      <div className="space-y-6">
-        <h2 className="h2">Frequently Asked Questions</h2>
-        <div className="space-y-4">
+      <div className="space-y-4 md:space-y-6">
+        <h2 className="text-xl md:text-2xl font-bold">
+          Frequently Asked Questions
+        </h2>
+        <div className="space-y-3 md:space-y-4">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -118,8 +115,10 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
               <Disclosure>
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="flex w-full items-center justify-between p-4 font-semibold bg-white hover:bg-gray-50 transition-colors">
-                      <h4 className="h4 text-left">{faq.question}</h4>
+                    <Disclosure.Button className="flex w-full items-center justify-between p-3 md:p-4 font-semibold bg-white hover:bg-gray-50 transition-colors">
+                      <h4 className="text-sm md:text-base font-medium text-left">
+                        {faq.question}
+                      </h4>
                       <motion.div
                         animate={{ rotate: open ? 0 : -90 }}
                         transition={{ duration: 0.2 }}
@@ -136,7 +135,7 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <Disclosure.Panel className="px-4 pb-4 pt-2 text-sm text-gray-600">
+                          <Disclosure.Panel className="px-3 md:px-4 pb-3 md:pb-4 pt-1 md:pt-2 text-xs md:text-sm text-gray-600">
                             {faq.answer}
                           </Disclosure.Panel>
                         </motion.div>
@@ -162,9 +161,11 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
         exit={{ opacity: 0, scale: 1.05, filter: "blur(8px)" }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
-        <div className="grid grid-cols-6 gap-6 items-start">
-          <div className="col-span-2 cn-box-base space-y-4">
-            <h2 className="h1 border-b border-base pb-3">Documentation</h2>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-6 items-start">
+          <div className="md:col-span-2 cn-box-base space-y-3 md:space-y-4">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold border-b border-base pb-2 md:pb-3">
+              Documentation
+            </h2>
             <TabGroup className="flex-col">
               {docsMenu.map((menu, i) => (
                 <Tab
@@ -173,13 +174,13 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
                   isActive={activeMenu === menu.value}
                   onClick={() => setActiveMenu(menu.value)}
                 >
-                  {menu.label}
+                  <span className="text-sm md:text-base">{menu.label}</span>
                 </Tab>
               ))}
             </TabGroup>
           </div>
 
-          <div className="col-span-4 cn-box-base">
+          <div className="md:col-span-4 cn-box-base">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeMenu}
@@ -196,7 +197,7 @@ fetch('${window.location.protocol}//${window.location.host}/api/agent?clientId=Y
                   filter: "blur(8px)",
                   transition: { duration: 0.6, ease: "easeInOut" },
                 }}
-                className="space-y-4 p-4"
+                className="space-y-3 md:space-y-4 p-3 md:p-4"
               >
                 {menuContents[activeMenu as MenuKey]}
               </motion.div>

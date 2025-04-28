@@ -39,15 +39,15 @@ const App = () => {
   return (
     <div
       id="main"
-      className="w-full h-screen overflow-y-auto px-20 py-10 space-y-6 bg-gradient-to-bl from-blue-700 to-blue-400"
+      className="w-full h-screen p-4 overflow-x-hidden overflow-y-auto lg:px-20 lg:py-10 space-y-6 bg-gradient-to-bl from-blue-700 to-blue-400"
     >
       <motion.div
-        className="cn-box-base"
+        className="cn-box-base w-full scrollbar overflow-x-scroll"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <TabGroup>
+        <TabGroup className="w-[400px]">
           {TABS.map((tab, i) => (
             <Tab
               key={tab.key}

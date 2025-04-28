@@ -36,7 +36,7 @@ export const TabGroup = ({
     <div
       className={`flex cursor-pointer ${
         className || ""
-      } w-full overflow-x-scroll scrollbar-hidden text-sm font-semibold`}
+      } overflow-x-scroll scrollbar-hidden text-sm font-semibold`}
     >
       {children}
     </div>

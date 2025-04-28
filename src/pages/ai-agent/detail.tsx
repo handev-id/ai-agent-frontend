@@ -66,7 +66,7 @@ const AiAgentDetail = ({ aiAgentDetail, afterUpdate }: AiAgentDetailProps) => {
               filter: "blur(8px)",
               transition: { duration: 0.6, ease: "easeInOut" },
             }}
-            className="w-full space-y-6 p-4"
+            className="w-full space-y-6 py-3 lg:p-4"
           >
             <Input
               label="Name"
@@ -136,7 +136,7 @@ const AiAgentDetail = ({ aiAgentDetail, afterUpdate }: AiAgentDetailProps) => {
               filter: "blur(8px)",
               transition: { duration: 0.6, ease: "easeInOut" },
             }}
-            className="w-full space-y-6 p-4"
+            className="w-full space-y-6 lg:p-4"
           >
             <p className="desc text-center my-4">
               Please provide a comprehensive knowledge source or resource

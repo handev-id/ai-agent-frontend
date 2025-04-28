@@ -25,13 +25,15 @@ const Account = ({ setUser }: Props) => {
   }, [accountApi.index.data]);
 
   return (
-    <div className="flex flex-col w-[500px] items-center mx-auto gap-1 h-[60%] justify-center p-3 rounded-lg">
+    <div className="flex flex-col w-full max-w-[500px] items-center mx-auto gap-1 h-[60%] justify-center rounded-lg">
       {accountApi.index.data ? (
-        <div className="cn-box-base">
-          <div className="pt-2 w-[400px] flex flex-col items-center">
+        <div className="cn-box-base w-full">
+          <div className="pt-2 w-full max-w-[400px] flex flex-col items-center">
             <Avatar sizing="base" value={accountApi.index.data?.avatar} />
-            <h2 className="h2 mt-4">{accountApi.index.data.name}</h2>
-            <p className="desc">{accountApi.index.data.email}</p>
+            <h2 className="h2 mt-4 text-center">
+              {accountApi.index.data.name}
+            </h2>
+            <p className="desc text-center">{accountApi.index.data.email}</p>
             <button
               onClick={handleLogout}
               type="button"
@@ -43,10 +45,10 @@ const Account = ({ setUser }: Props) => {
         </div>
       ) : (
         <>
-          <h1 className="h1 text-white">Getting Started</h1>
+          <h1 className="h1 text-white text-center">Getting Started</h1>
           <a
             href={`${import.meta.env.VITE_BASE_URL}/auth/login`}
-            className="w-full flex items-center justify-center p-3 bg-white dark:bg-[#242B51] text-body-color hover:text-primary dark:text-body-color text-base font-medium dark:hover:text-white rounded-md shadow-lg hover:shadow duration-300 hover:translate-y-1 hover:scale-95 mb-6"
+            className="w-full max-w-[400px] flex items-center justify-center p-3 bg-white dark:bg-[#242B51] text-body-color hover:text-primary dark:text-body-color text-base font-medium dark:hover:text-white rounded-md shadow-lg hover:shadow duration-300 hover:translate-y-1 hover:scale-95 mb-6"
           >
             <span className="mr-3">
               <svg

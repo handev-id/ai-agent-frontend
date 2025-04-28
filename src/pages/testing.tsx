@@ -24,7 +24,6 @@ interface SelectedAgent {
 const Testing = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [userId] = useState(generateUserId());
   const [isTyping, setIsTyping] = useState(false);
   const { handleScrollRoom } = useInteractivity();
   const aiAgentApi = AiAgentEndpoint();
@@ -60,7 +59,7 @@ const Testing = () => {
     handleScrollRoom(messagesRef);
 
     socket?.emit("send-message", {
-      userId,
+      userId: watch("userId"),
       text: inputMessage,
       clientId: watch("agent")?.credentials?.clientId,
     });
@@ -84,18 +83,18 @@ const Testing = () => {
         transports: ["websocket"],
         auth: {
           token: watch("agent")?.credentials?.clientId,
-          userId: userId,
+          userId: watch("userId"),
         },
       });
 
       setSocket(newSocket);
 
-      newSocket.on(`agent-typing:${userId}`, (isType: boolean) => {
+      newSocket.on(`agent-typing:${watch("userId")}`, (isType: boolean) => {
         setIsTyping(isType);
         handleScrollRoom(messagesRef);
       });
 
-      newSocket.on(`reply-message:${userId}`, (message: string) => {
+      newSocket.on(`reply-message:${watch("userId")}`, (message: string) => {
         append({
           role: "model",
           text: message,
@@ -104,11 +103,11 @@ const Testing = () => {
       });
 
       return () => {
-        newSocket.off(`reply-message:${userId}`);
+        newSocket.off(`reply-message:${watch("userId")}`);
         newSocket.disconnect();
       };
     }
-  }, [watch("agent")?.credentials?.clientId, userId]);
+  }, [watch("agent")?.credentials?.clientId, watch("userId")]);
 
   return (
     <AnimatePresence mode="wait">
@@ -120,15 +119,22 @@ const Testing = () => {
         exit={{ opacity: 0, scale: 1.05, filter: "blur(8px)" }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
       >
-        <div className="grid grid-cols-6 gap-6 items-start">
-          <div id="ai-agent-detail" className="col-span-2 relative cn-box-base">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-6 items-start">
+          <div
+            id="ai-agent-detail"
+            className="md:col-span-2 relative cn-box-base"
+          >
             <div className="text-center items-center box-header">
               <div className="flex gap-2 justify-center items-center">
-                <span className="text-2xl">{GLOBAL_ICONS_FA.bot}</span>
-                <h2 className="h1-lg">AI Agent List</h2>
+                <span className="text-xl md:text-2xl">
+                  {GLOBAL_ICONS_FA.bot}
+                </span>
+                <h2 className="text-lg md:text-xl lg:text-2xl font-bold">
+                  AI Agent List
+                </h2>
               </div>
 
-              <p className="desc mt-1 text-center">
+              <p className="text-sm md:text-base mt-1 text-center">
                 Select an AI Agent below to test how well it fits your needs
                 before integrating it into your system.
               </p>
@@ -142,36 +148,41 @@ const Testing = () => {
                   onClick={() => {
                     reset({
                       agent: ai,
-                      userId: userId,
+                      userId: generateUserId(),
                       messages: [],
                     });
                   }}
                 >
-                  {ai.name}
+                  <span className="truncate">{ai.name}</span>
                 </Tab>
               ))}
             </TabGroup>
           </div>
           {watch("agent")?.id ? (
             createPortal(
-              <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex justify-center items-center">
+              <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex justify-center items-center p-4">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="overflow-hidden w-[90%] lg:w-[500px] bg-neutral rounded-lg shadow-xl"
+                  className="overflow-hidden w-full max-w-[90vw] md:w-[500px] bg-neutral rounded-lg shadow-xl"
                 >
-                  <div className="flex items-center justify-between text-white bg-gray-800 h-16 px-4 lg:px-6">
+                  <div className="flex items-center justify-between text-white bg-gray-800 h-14 md:h-16 px-4">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">{GLOBAL_ICONS_FA.bot}</span>
-                      <h2 className="h2">{watch("agent")?.name}</h2>
+                      <span className="text-lg md:text-xl">
+                        {GLOBAL_ICONS_FA.bot}
+                      </span>
+                      <h2 className="text-base md:text-lg font-semibold truncate max-w-[180px] md:max-w-[300px]">
+                        {watch("agent")?.name}
+                      </h2>
                     </div>
                     <button
                       onClick={closeChat}
                       className="p-1 rounded-full hover:bg-gray-700 transition-colors"
+                      aria-label="Close chat"
                     >
                       <svg
-                        width="24"
-                        height="24"
+                        width="20"
+                        height="20"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -187,7 +198,7 @@ const Testing = () => {
                   </div>
                   <div
                     ref={messagesRef}
-                    className="h-[400px] px-4 lg:px-6 overflow-y-auto bg-white scrollbar"
+                    className="h-[60vh] max-h-[400px] px-3 md:px-4 overflow-y-auto bg-white scrollbar"
                   >
                     {messages.length > 0 ? (
                       messages.map((message, index) => (
@@ -197,17 +208,17 @@ const Testing = () => {
                             message.role === "user"
                               ? "justify-end"
                               : "justify-start"
-                          } py-4`}
+                          } py-3`}
                         >
                           <div
-                            className={`flex gap-2 items-start max-w-[80%] p-3 rounded-lg ${
+                            className={`flex gap-2 items-start max-w-[90%] p-2 md:p-3 rounded-lg ${
                               message.role === "user"
                                 ? "bg-gray-800 text-white"
                                 : "bg-[#e5e7eb]"
                             }`}
                           >
                             <p
-                              className="text-sm whitespace-pre-line"
+                              className="text-xs md:text-sm whitespace-pre-line"
                               dangerouslySetInnerHTML={{
                                 __html: message.text
                                   .replace(
@@ -221,22 +232,22 @@ const Testing = () => {
                         </div>
                       ))
                     ) : (
-                      <div className="h-full flex items-center justify-center text-gray-500">
+                      <div className="h-full flex items-center justify-center text-gray-500 text-sm md:text-base">
                         Start a conversation with {watch("agent")?.name}
                       </div>
                     )}
                     {isTyping && (
-                      <div className="text-sm text-gray-500 pb-2 pt-2 animate-bounce">
+                      <div className="text-xs md:text-sm text-gray-500 pb-2 pt-2 animate-bounce">
                         Typing...
                       </div>
                     )}
                   </div>
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="flex gap-2 items-center w-full py-4 px-4 lg:px-6 bg-white border-t border-base"
+                    className="flex gap-2 items-center w-full py-3 px-3 md:px-4 bg-white border-t border-base"
                   >
                     <input
-                      className="border border-base w-full text-sm h-10 px-4 rounded-md focus:border-gray-800 duration-500 outline-none"
+                      className="border border-base w-full text-xs md:text-sm h-9 md:h-10 px-3 md:px-4 rounded-md focus:border-gray-800 duration-500 outline-none"
                       type="text"
                       placeholder="Type your message..."
                       value={inputMessage}
@@ -250,7 +261,7 @@ const Testing = () => {
                     />
                     <button
                       type="submit"
-                      className="rounded-md bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 text-sm transition-colors"
+                      className="rounded-md bg-gray-800 hover:bg-gray-700 text-white px-3 md:px-4 py-1.5 md:py-2 text-xs md:text-sm transition-colors disabled:opacity-50"
                       disabled={!inputMessage.trim()}
                     >
                       Send
@@ -261,8 +272,8 @@ const Testing = () => {
               document.body
             )
           ) : (
-            <div className="col-span-4 cn-box-base flex items-center justify-center min-h-[400px]">
-              <h2 className="h2 text-center">
+            <div className="md:col-span-4 cn-box-base flex items-center justify-center min-h-[300px] md:min-h-[400px]">
+              <h2 className="text-lg md:text-xl lg:text-2xl text-center font-semibold">
                 Select an AI agent to get started
               </h2>
             </div>

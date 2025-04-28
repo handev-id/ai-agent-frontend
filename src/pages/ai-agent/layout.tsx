@@ -24,12 +24,12 @@ const LayoutAiDetail = ({
   }, [activeTab]);
 
   return (
-    <div className="grid grid-cols-6 gap-6 items-start">
-      <div id="ai-agent-detail" className="col-span-2 relative cn-box-base">
+    <div className="grid lg:grid-cols-6 gap-6 items-start">
+      <div id="ai-agent-detail" className="lg:col-span-2 relative cn-box-base">
         <div className="absolute top-3 left-3">
           <button
             onClick={() => afterUpdate()}
-            className="text-2xl border border-base p-2 rounded-lg hover:bg-neutral dark:hover:bg-neutralHoverDark  Dark cursor-pointer"
+            className="text-2xl border border-base p-2 rounded-lg hover:bg-neutral dark:hover:bg-neutralHoverDark cursor-pointer"
           >
             {GLOBAL_ICONS.arrowBack}
           </button>
@@ -56,7 +56,7 @@ const LayoutAiDetail = ({
           ))}
         </TabGroup>
       </div>
-      <div className="col-span-4 cn-box-base">{children}</div>
+      <div className="lg:col-span-4 cn-box-base">{children}</div>
     </div>
   );
 };

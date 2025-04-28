@@ -2,21 +2,20 @@ export const responseJSON = () => {
   const success = `
 // Success Response (200 OK)
 {
-  "success": true,
-  "code": 200,
-  "data": {
-    "id": "agt_123456789",
-    "name": "Customer Support Bot",
-    "status": "active",
-    "created_at": "2023-11-20T10:30:00Z",
-    "updated_at": "2023-11-20T10:30:00Z"
-  },
-  "meta": {
-    "api_version": "v1",
-    "request_id": "req_987654321"
-  }
-}
-`;
+  "contents": [
+      {
+        "role": "user",
+        "content": "Helo",
+      },
+      {
+        "role": "model",
+        "content": "Hai, How can i help you today?",
+      },
+    ],
+  "agent": {
+      "name": "Ai Agent",
+    }
+}`;
 
   const error = `
 // Error Validation Response (400 Bad Request)
@@ -46,4 +45,24 @@ export const responseJSON = () => {
 }`;
 
   return { success, error };
+};
+
+export const requestApi = () => {
+  return `
+// Example API Request
+fetch(
+    "${window.location.protocol}//${window.location.host}/api/message?clientId=YOUR_CLIENT_ID",
+    {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: "Hello, how can I help you today?",
+      }),
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));`;
 };
