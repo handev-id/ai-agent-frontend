@@ -28,8 +28,13 @@ const Account = ({ setUser }: Props) => {
     <div className="flex flex-col w-full max-w-[500px] items-center mx-auto gap-1 h-[60%] justify-center rounded-lg">
       {accountApi.index.data ? (
         <div className="cn-box-base w-full">
-          <div className="pt-2 w-full max-w-[400px] flex flex-col items-center">
-            <Avatar sizing="base" value={accountApi.index.data?.avatar} />
+          <div className="pt-2 w-full flex flex-col items-center">
+            <Avatar
+              sizing="base"
+              value={
+                "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611765.jpg"
+              }
+            />
             <h2 className="h2 mt-4 text-center">
               {accountApi.index.data.name}
             </h2>

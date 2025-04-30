@@ -78,7 +78,7 @@ const Testing = () => {
 
   useEffect(() => {
     if (watch("agent")?.credentials?.clientId) {
-      const baseURL = "http://localhost:3001";
+      const baseURL = `${import.meta.env.VITE_WS_URL}`;
       const newSocket = io(baseURL, {
         transports: ["websocket"],
         auth: {

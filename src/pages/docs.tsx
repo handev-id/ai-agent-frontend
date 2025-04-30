@@ -3,9 +3,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Disclosure } from "@headlessui/react";
 import { faqs } from "../utils/faqs";
+import { embedCode, requestApi, responseJSON } from "../utils/code-display";
 import Tab, { TabGroup } from "../components/Tab";
 import CodeDisplay from "../components/CodeDisplay";
-import { requestApi, responseJSON } from "../utils/code-display";
 
 type MenuKey = "api" | "integration" | "faq";
 
@@ -42,7 +42,7 @@ const Docs = () => {
           </p>
 
           <div className="mt-3">
-            <CodeDisplay language="javascript" code={requestApi().trim()} />
+            <CodeDisplay language="javascript" code={requestApi.trim()} />
           </div>
         </div>
         <div>
@@ -76,25 +76,7 @@ const Docs = () => {
         </p>
 
         <div className="mt-3">
-          <CodeDisplay
-            language="html"
-            code={`
-<!DOCTYPE html>
-<html>
-<head>
-  <title>My App</title>
-</head>
-<body>
-  <!-- Add this to your HTML -->
-  <script type="text/javascript">
-    window.theme = "#1f2937";
-    window.clientId = "YOUR_CLIENT_ID";
-  </script>
-  <script async src="${window.location.protocol}//${window.location.host}/static/widget.js"></script>
-</body>
-</html>
-          `.trim()}
-          />
+          <CodeDisplay language="html" code={embedCode.trim()} />
         </div>
       </div>
     ),

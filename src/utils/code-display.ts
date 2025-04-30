@@ -47,8 +47,7 @@ export const responseJSON = () => {
   return { success, error };
 };
 
-export const requestApi = () => {
-  return `
+export const requestApi = `
 // Example API Request
 fetch(
     "${window.location.protocol}//${window.location.host}/api/message?clientId=YOUR_CLIENT_ID",
@@ -63,6 +62,22 @@ fetch(
       }),
     }
   )
-    .then((response) => response.json())
-    .then((data) => console.log(data));`;
-};
+  .then((response) => response.json())
+  .then((data) => console.log(data));`;
+
+export const embedCode = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+</head>
+<body>
+  <!-- Add this to your HTML -->
+  <script type="text/javascript">
+    window.theme = "#1f2937";
+    window.clientId = "YOUR_CLIENT_ID";
+  </script>
+  <script async src="${window.location.protocol}//${window.location.host}/static/widget.js"></script>
+</body>
+</html>
+`;
