@@ -50,7 +50,7 @@ export const responseJSON = () => {
 export const requestApi = `
 // Example API Request
 fetch(
-    "${window.location.protocol}//${window.location.host}/api/message?clientId=YOUR_CLIENT_ID",
+    "${window.location.protocol}//api.${window.location.host}/api/message?clientId=YOUR_CLIENT_ID",
     {
       method: "POST",
       headers: {
@@ -77,7 +77,7 @@ export const embedCode = `
     window.theme = "#1f2937";
     window.clientId = "YOUR_CLIENT_ID";
   </script>
-  <script async src="${window.location.protocol}//${window.location.host}/static/widget.js"></script>
+  <script async src="${window.location.protocol}//api.${window.location.host}/static/widget.js"></script>
 </body>
 </html>
 `;

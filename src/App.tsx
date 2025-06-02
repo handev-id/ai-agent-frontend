@@ -47,7 +47,7 @@ const App = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        <TabGroup className="w-[400px]">
+        <TabGroup className="w-[400px] lg:w-full">
           {TABS.map((tab, i) => (
             <Tab
               key={tab.key}
