@@ -85,6 +85,7 @@ const Testing = () => {
           token: watch("agent")?.credentials?.clientId,
           userId: watch("userId"),
         },
+        path: "/ws/socket.io"
       });
 
       setSocket(newSocket);
